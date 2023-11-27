@@ -1,0 +1,46 @@
+def longest_common_substring(str1, str2):
+    # Obtain the lengths of the input strings
+    len1 = len(str1)
+    len2 = len(str2)
+
+    # Create a 2D table to store the lengths of common suffixes
+    table = [[0] * (len2 + 1) for _ in range(len1 + 1)]
+
+    # Variables to store the length of the longest common substring and its ending position
+    max_length = 0
+    end_position = 0
+
+    # Fill the table using nested loops
+    for i in range(1, len1 + 1):
+        for j in range(1, len2 + 1):
+            # Update the table based on character matches
+            if str1[i - 1] == str2[j - 1]:
+                table[i][j] = table[i - 1][j - 1] + 1
+                # Check if the current length is greater than the maximum length
+                if table[i][j] > max_length:
+                    max_length = table[i][j]
+                    # Update the ending position if a longer substring is found
+                    end_position = i
+            else:
+                table[i][j] = 0
+
+    # Extract the longest common substring based on the end position and maximum length
+    longest_substring = str1[end_position - max_length:end_position]
+
+    # Return both the table and the longest common substring
+    return table, longest_substring
+
+# Example usage with unique comments
+str1 = "ABAB"
+str2 = "BABA"
+
+# Obtain the table and result from the longest_common_substring function
+table, result = longest_common_substring(str1, str2)
+
+# Print the table with an informative message
+print("The dynamic programming table for the Longest Common Substring problem:")
+for row in table:
+    print(row)
+
+# Print the result along with a creative message
+print("\nThe Longest Common Substring is:", result)
